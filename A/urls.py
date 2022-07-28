@@ -20,6 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('home.urls',namespace='home')),
     path('',include('account.urls',namespace='account')),
-    
-    
+    path('',include('posts.urls',namespace='posts')),
 ]

@@ -39,6 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'home.apps.HomeConfig',
     'account.apps.AccountConfig',
+    'posts.apps.PostsConfig',
+
+
+
+    
 ]
 
 MIDDLEWARE = [
@@ -125,9 +130,14 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+
+
+
+AUTHENTICATION_BACKENDS=[
+                    'django.contrib.auth.backends.ModelBackend',
+
+                    'account.authenticate.EmailBackend',
+
+]
+
 LOGIN_URL = '/account/login/'
-
-
-
-
-

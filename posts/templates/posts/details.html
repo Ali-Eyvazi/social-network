@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<h2>{{post.body}}</h2>
+<h8 class="text-start">{{post.user.username}}</h8>
+<h8>-></h8>
+<h8></h8>{{post.updated| date:"Y - M - d"}}</h8>
+
+{% endblock %}
