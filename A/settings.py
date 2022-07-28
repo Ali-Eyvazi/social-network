@@ -141,3 +141,29 @@ AUTHENTICATION_BACKENDS=[
 ]
 
 LOGIN_URL = '/account/login/'
+
+
+
+
+# google account
+EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST='SMTP.GMAIL.COM'
+EMAIL_HOST_USER='ali.eyvazi.official@gmail.com'
+EMAIL_PORT=587
+EMAIL_HOST_PASSWORD='izfnksjxiyarkpwe'
+EMAIL_USE_TLS=True
+DEFAULT_FROM_EMAIL='HAJ ALI'
+
+
+
+
+
+
+
+
+
+
+
+
+
+

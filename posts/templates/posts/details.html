@@ -3,9 +3,15 @@
 
 {% block content %}
 
-<h2>{{post.body}}</h2>
-<h8 class="text-start">{{post.user.username}}</h8>
+
+<h2>{{post.body}}</h2><br><br>
+<a class="text-start" href="{% url 'account:user_profile' post.user.id %}">{{post.user.username}}</a>
 <h8>-></h8>
-<h8></h8>{{post.updated| date:"Y - M - d"}}</h8>
+<h8></h8>{{post.updated| date:"Y - M - d"}}</h8><br><br>
+
+{% if request.user.id == post.user.id %}
+<a class="btn btn-danger"  href="{% url 'posts:delete'  post.id %}" >Delete</a>
+<a class="btn btn-primary" href="{% url 'posts:update'  post.id%}">Update</a>
+{% endif %}
 
 {% endblock %}
