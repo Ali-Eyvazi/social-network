@@ -1,17 +1,70 @@
 {% extends 'base.html' %}
-
-
 {% block content %}
 
+        <h2>{{post.body}}</h2><br><br>
 
-<h2>{{post.body}}</h2><br><br>
-<a class="text-start" href="{% url 'account:user_profile' post.user.id %}">{{post.user.username}}</a>
-<h8>-></h8>
-<h8></h8>{{post.updated| date:"Y - M - d"}}</h8><br><br>
+            <a class="text-start" href="{% url 'account:user_profile' post.user.id %}">{{post.user.username}}</a>
 
-{% if request.user.id == post.user.id %}
-<a class="btn btn-danger"  href="{% url 'posts:delete'  post.id %}" >Delete</a>
-<a class="btn btn-primary" href="{% url 'posts:update'  post.id%}">Update</a>
-{% endif %}
+            <h8>-></h8>
+
+        <h8></h8>{{post.updated| date:"Y - M - d"}}</h8><br><br>
+
+                {% if request.user.id == post.user.id %}
+                
+                    <a class="btn btn-danger"  href="{% url 'posts:delete'  post.id %}" >Delete</a>
+                    <a class="btn btn-primary" href="{% url 'posts:update'  post.id%}">Update</a>
+
+                {% endif %}
+                <div class="col-md-6">
+                {% if request.user.is_authenticated %}
+                <a href="{% url 'posts:post_like' post.id %}" class="{% if can_like %} disabled {% endif %}btn btn-primaryrever col-md-4">Like-{{post.post_vote.count}}</a>
+                        <form action=""  method = 'post'>
+
+                            {% csrf_token %}
+                            {{form.as_p}}
+                            <input class= 'btn btn'type="submit" value="send">
+                        </form>
+                {% else %}  
+
+                        <p>only logged in users can comment</p>
+
+                {% endif %}
+
+            </div>
+        <hr>
+
+              <p>  {{ comments.count }} comments</p>
+            
+                {% for comment in comments %}            
+                    <div class="card  bg-dark text-white  col-md-6">
+                        <p class="card-body">{{comment.user}}    -{{comment.created| timesince}}</p>
+                        <p class="card-body ">{{comment.body}}</p><br>
+                        {% if request.user.is_authenticated %}
+                       
+                        
+                                <form action="{% url 'posts:add_reply' post.id comment.id%}" method="post">
+                                        {% csrf_token %}
+                                        {{reply_form.as_p}}
+                                        <input type="submit" value="send">
+                                </form>
+                        {% endif%}
+
+
+
+                        {% with replies=comment.reply_comment.all %}
+                        {% for reply in replies  %}
+                           <p class=" bg-info p-3 m-2">{{reply.user}}<br> {{reply.body}}</p>
+                           <a class="btn btn-danger col-md-2" href="">Delete Reply</a>
+                          
+                           
+                        {% endfor %} {% endwith%}
+                        
+                    </div>
+                {% empty %}
+                <H3>No comments yet</h3>
+                {% endfor %}
+               
+            
+    
 
 {% endblock %}
